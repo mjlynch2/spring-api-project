@@ -22,24 +22,29 @@ import static com.example.demo.XMLParser.getDoc;
 @RestController
 public class Controller {
 
-    public Controller() throws ParserConfigurationException, IOException, SAXException {
-
+    public Controller() throws IOException, SAXException, ParserConfigurationException {
     }
+
+    String xmlUrl = "https://data.baltimorecity.gov/api/views/k5ry-ef3g/rows.xml";
+
+    XMLParser xml = new XMLParser();
+    Document xmlDoc = xml.getDoc(xmlUrl);
+
+
 
     @RequestMapping("/")
     String home() {
         return "Hello World!";
     }
 
-    @GetMapping("/test")
+    @GetMapping("/restaurant/all")
     public Document test() throws IOException, SAXException, ParserConfigurationException {
-        XMLParser myXmlDoc = new XMLParser();
-        return myXmlDoc.getDoc("https://data.hawaii.gov/api/views/usep-nua7/rows.xml");
+        return xmlDoc;
     }
 
-    @GetMapping("/xml/{tagName}")
+    @GetMapping("/restaurant/{tagName}")
     public String[] test2(@PathVariable String tagName) throws IOException, SAXException, ParserConfigurationException {
         XMLParser myXmlDoc = new XMLParser();
-        return myXmlDoc.getAllServices(myXmlDoc.getDoc("https://data.hawaii.gov/api/views/usep-nua7/rows.xml"), tagName);
+        return myXmlDoc.getAllServices(xmlDoc, tagName);
     }
 }
