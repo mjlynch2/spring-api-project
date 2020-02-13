@@ -1,5 +1,9 @@
 package com.example.demo;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +18,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 import static com.example.demo.XMLParser.getAllServices;
 import static com.example.demo.XMLParser.getDoc;
@@ -43,8 +48,7 @@ public class Controller {
     }
 
     @GetMapping("/restaurant/{tagName}")
-    public String[] test2(@PathVariable String tagName) throws IOException, SAXException, ParserConfigurationException {
-        XMLParser myXmlDoc = new XMLParser();
-        return myXmlDoc.getAllServices(xmlDoc, tagName);
+    public JSONArray test2(@PathVariable String tagName) throws IOException, SAXException, ParserConfigurationException {
+        return getAllServices(xmlDoc, tagName);
     }
 }
